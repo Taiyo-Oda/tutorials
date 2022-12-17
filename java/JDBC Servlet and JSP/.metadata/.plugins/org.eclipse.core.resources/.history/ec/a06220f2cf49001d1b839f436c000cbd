@@ -1,0 +1,22 @@
+package com.taiyo.cnp.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import com.taiyo.cnp.model.Product;
+import com.taiyo.cnp.util.ConnectionUtil;
+
+public class ProductDAO {
+
+	public void save(Product product) {
+		Connection connection = ConnectionUtil.getConnection();
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("insert into product (name,description,price) values(?,?,?)");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+}

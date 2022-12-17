@@ -1,0 +1,5 @@
+package com.bharath.trainings.jdbc.batch;
+
+public class BatchDAO {
+
+}

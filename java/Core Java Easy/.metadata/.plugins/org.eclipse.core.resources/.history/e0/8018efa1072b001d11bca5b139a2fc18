@@ -1,0 +1,47 @@
+package com.bharath.java.reflection;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+
+public class Test {
+
+	public static void main(String[] args) {
+		try {
+			// クラス名を受け取り、それをメモリにロードする
+			Class<?> myClass = Class.forName(Calculator.class.getName());
+			// クラス名を取得する
+			System.out.println(myClass.getName());
+
+			// クラス内のコンストラクタの配列を返してくれる(※privateにはアクセスできない)
+			Constructor<?>[] constructors = myClass.getConstructors();
+			System.out.println(Arrays.toString(constructors));
+
+			// クラス内のメソッドの配列を返してくれる
+			Method[] methods = myClass.getMethods();
+			System.out.println(Arrays.toString(methods));
+
+			// 特定のコンストラクタにアクセスする（渡したパラメータに応じて適切なコンストラクタが選択される）
+			Constructor<?> constructor = myClass.getConstructor(null);
+			// オブジェクト（コンストラクタ）のインスタンスを作成する
+			System.out.println(constructor.newInstance(null));
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+	}
+
+}

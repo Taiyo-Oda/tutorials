@@ -1,0 +1,24 @@
+package com.bharath.java.reflection;
+
+import java.lang.reflect.Constructor;
+import java.util.Arrays;
+
+public class Test {
+
+	public static void main(String[] args) {
+		try {
+			// クラス名を受け取り、それをメモリにロードする
+			Class<?> myClass = Class.forName(Calculator.class.getName());
+			// クラス名を取得する
+			System.out.println(myClass.getName());
+
+			// クラス内のコンストラクタの配列を返してくれる(※privateにはアクセスできない)
+			Constructor<?>[] constructors = myClass.getConstructors();
+			System.out.println(Arrays.toString(constructors));
+			System.out.println(Arrays.toString(myClass.getMethods()));
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+}

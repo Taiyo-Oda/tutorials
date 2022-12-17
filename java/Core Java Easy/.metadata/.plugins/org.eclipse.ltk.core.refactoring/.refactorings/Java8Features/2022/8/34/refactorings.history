@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="&apos;A.java, B.java, C.java, Test.java&apos; を &apos;basics&apos; に移動" description="4 個のリソースを &apos;basics&apos; に移動" destination="src/com/bharath/java8/lambdas/basics" element1="src/A.java" element2="src/B.java" element3="src/C.java" element4="src/Test.java" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="4" stamp="1660911996592" updateReferences="true"/>
+</session>

@@ -1,0 +1,23 @@
+package com.taiyo.cnp.util;
+
+import java.sql.Connection;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+public class ConnectionUtil {
+	
+	public static Connection getConnection() {
+		Connection con = null;
+		try {
+			Context context = new InitialContext();
+			DataSource ds = (DataSource) context.lookup("java:comp/env/myds");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+		return con;
+	}
+
+}

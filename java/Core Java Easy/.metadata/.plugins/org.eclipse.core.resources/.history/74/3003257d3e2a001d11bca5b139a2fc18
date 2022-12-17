@@ -1,0 +1,13 @@
+
+public class B {
+	
+	public static void main(String[] args) {
+		A a = new A();
+		
+		System.out.println(a);
+		// ここのみ警告が出る
+		a.myMethod();
+		a.myMethod2();
+	}
+	
+}

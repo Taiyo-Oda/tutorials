@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="リソース名 &apos;javaBasic/src/javaBasic/StaticVariabies.java&apos; を &apos;StaticVariables.java&apos; に変更します" description="リソース &apos;StaticVariabies.java&apos; の名前変更" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/javaBasic/StaticVariabies.java" name="StaticVariables.java" stamp="1655591564169" updateReferences="true"/>
+</session>

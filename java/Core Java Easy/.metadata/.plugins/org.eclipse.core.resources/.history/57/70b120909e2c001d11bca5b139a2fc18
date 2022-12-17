@@ -1,0 +1,19 @@
+package com.bharath.java.re;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class PatternAndMatcher {
+
+	public static void main(String[] args) {
+		// 文字列の正規表現を受け取り、patternオブジェクトを返す
+		Pattern pattern = Pattern.compile("abc");
+		Matcher matcher = pattern.matcher("abcdefghijabcdefgabcdefg");
+		while (matcher.find()) {
+			System.out.println("start: " + matcher.start());
+			System.out.println("end: " + matcher.end());
+			System.out.println("group: " + matcher.group());
+		}
+	}
+
+}

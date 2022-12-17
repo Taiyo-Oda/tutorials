@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="&apos;DisplayMessage.java, MyThread.java, SynchronizationDemo.java&apos; を &apos;blocks&apos; に移動" description="3 個のリソースを &apos;blocks&apos; に移動" destination="src/synchronization/blocks" element1="src/synchronization/DisplayMessage.java" element2="src/synchronization/MyThread.java" element3="src/synchronization/SynchronizationDemo.java" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="3" stamp="1657144568071" updateReferences="true"/>
+</session>

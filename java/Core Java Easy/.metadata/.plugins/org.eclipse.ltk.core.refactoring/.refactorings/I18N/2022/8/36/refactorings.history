@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="&apos;DateFotmatTest.java, LocaleTest.java, NumberFormatTest.java, SimpleDateFormatTest.java&apos; を &apos;src&apos; に移動" description="4 個のリソースを &apos;src&apos; に移動" destination="src" element1="/JVMArchitecture/src/classloading/DateFotmatTest.java" element2="/JVMArchitecture/src/classloading/LocaleTest.java" element3="/JVMArchitecture/src/classloading/NumberFormatTest.java" element4="/JVMArchitecture/src/classloading/SimpleDateFormatTest.java" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="4" stamp="1661810262666" updateReferences="true"/>
+</session>

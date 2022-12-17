@@ -1,0 +1,31 @@
+package com.bharath.trainings.jdbc.metadata;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class MetadataDAO {
+	public static void main(String[] args) {
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "taiyou03");
+				Statement stmt = con.createStatement();) {
+			// 与えられたSQL文を実行し、1つのResultSetオブジェクトを返
+			ResultSet resultSet = stmt.executeQuery("select * from account");
+			// この ResultSet オブジェクトの列の数、型、およびプロパティを取得する
+			ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+			// この ResultSet オブジェクトのカラム数を返す
+			int columnCount = resultSetMetaData.getColumnCount();
+
+			for (int i = 1; i <= columnCount; i++) {
+				System.out.println(resultSetMetaData.getColumnName(i));
+				System.out.println(resultSetMetaData.getColumnTypeName(i));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+}

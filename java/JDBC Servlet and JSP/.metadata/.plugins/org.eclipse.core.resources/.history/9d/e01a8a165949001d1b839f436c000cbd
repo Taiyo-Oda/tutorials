@@ -1,0 +1,20 @@
+package com.bharath.trainings.jdbc.metadata;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class MetadataDAO {
+	public static void main(String[] args) {
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "taiyou03");
+				Statement stmt = con.createStatement();) {
+			ResultSet resultSet = stmt.executeQuery("select * from account");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+}

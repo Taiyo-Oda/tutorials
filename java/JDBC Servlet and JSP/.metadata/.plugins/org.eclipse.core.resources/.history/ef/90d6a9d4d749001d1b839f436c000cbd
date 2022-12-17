@@ -1,0 +1,35 @@
+package com.taiyo.cnp.controllers;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.taiyo.cnp.model.Coupon;
+
+/**
+ * Servlet implementation class CouponController
+ */
+@WebServlet("/coupons")
+public class CouponController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    public CouponController() {
+        super();
+    }
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String couponCode = request.getParameter("couponCode");
+		String discount = request.getParameter("discount");
+		String expiryDate = request.getParameter("expiryDate");
+		
+		Coupon coupon = new Coupon();
+		coupon.setCode(couponCode);
+		coupon.setDiscount(new BigDecimal(discount));
+	}
+
+}

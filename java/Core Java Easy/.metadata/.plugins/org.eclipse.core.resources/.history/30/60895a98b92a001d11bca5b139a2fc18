@@ -1,0 +1,10 @@
+package com.bharath.java.reflection;
+
+public class Test {
+
+	public static void main(String[] args) throws ClassNotFoundException {
+		// クラス名を受け取り、それをメモリにロードする
+		Class.forName(Calculator.class.getName());
+	}
+	
+}

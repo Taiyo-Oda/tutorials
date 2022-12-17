@@ -1,0 +1,15 @@
+package com.bharath.java.reflection;
+
+public class Test {
+
+	public static void main(String[] args) {
+		// クラス名を受け取り、それをメモリにロードする
+		try {
+			System.out.println(Class.forName(Calculator.class.getName()));
+		} catch (ClassNotFoundException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+	}
+	
+}

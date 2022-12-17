@@ -1,0 +1,5 @@
+package com.taiyo.cnp.util;
+
+public class ConnectionUtil {
+
+}

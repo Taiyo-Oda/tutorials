@@ -1,0 +1,11 @@
+package com.taiyo.cnp.dao;
+
+import com.taiyo.cnp.model.Coupon;
+
+public class CouponDAO {
+	
+	public void save(Coupon coupon) {
+		
+	}
+
+}

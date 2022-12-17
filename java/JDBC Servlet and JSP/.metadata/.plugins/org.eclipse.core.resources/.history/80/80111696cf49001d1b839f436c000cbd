@@ -1,0 +1,5 @@
+package com.taiyo.cnp.dao;
+
+public class ProductDAO {
+
+}

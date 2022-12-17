@@ -1,0 +1,7 @@
+package com.bharath.trainings.jdbc.batch;
+
+public class BatchDAO {
+	public static void main(String[] args) {
+		
+	}
+}

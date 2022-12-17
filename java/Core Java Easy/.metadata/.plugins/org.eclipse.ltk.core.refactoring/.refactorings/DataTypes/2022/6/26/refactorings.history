@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="リソース名 &apos;DataTypes/src/DataTypeDemo.java&apos; を &apos;DataTypesDemo.java&apos; に変更します" description="リソース &apos;DataTypeDemo.java&apos; の名前変更" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/DataTypeDemo.java" name="DataTypesDemo.java" stamp="1655704161180" updateReferences="true"/>&#x0A;<refactoring comment="リソース名 &apos;DataTypes/src/BackAccount.java&apos; を &apos;BankAccount.java&apos; に変更します" description="リソース &apos;BackAccount.java&apos; の名前変更" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/BackAccount.java" name="BankAccount.java" stamp="1655721506772" updateReferences="true"/>
+</session>

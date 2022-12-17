@@ -1,0 +1,8 @@
+
+public class MyChild extends MyParent {
+
+	public String greet(Integer name) {
+		return "Hi" + name;
+	}
+
+}

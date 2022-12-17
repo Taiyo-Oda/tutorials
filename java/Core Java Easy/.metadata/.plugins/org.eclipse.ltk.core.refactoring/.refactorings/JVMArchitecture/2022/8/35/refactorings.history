@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="&apos;Test.java, User.java&apos; を &apos;classloading&apos; に移動" description="2 個のリソースを &apos;classloading&apos; に移動" destination="src/classloading" element1="src/Test.java" element2="src/User.java" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="2" stamp="1661259488575" updateReferences="true"/>
+</session>

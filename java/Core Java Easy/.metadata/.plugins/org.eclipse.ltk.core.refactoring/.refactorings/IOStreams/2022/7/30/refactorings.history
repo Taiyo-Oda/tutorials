@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="&apos;BufferedReaderDemo.java&apos; を &apos;src&apos; に移動" description="&apos;BufferedReaderDemo.java&apos; を &apos;src&apos; に移動" destination="src" element1="src/outputstreams/BufferedReaderDemo.java" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="1" stamp="1658226272405" updateReferences="true"/>
+</session>

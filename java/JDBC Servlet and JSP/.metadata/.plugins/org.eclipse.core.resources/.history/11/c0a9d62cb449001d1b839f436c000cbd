@@ -1,0 +1,24 @@
+package com.bharath.trainings.jdbc.tm;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class TransactionDAO {
+
+	public static void main(String[] args) {
+
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "taiyou03");
+				Statement stmt = con.createStatement();) {
+			stmt.executeUpdate("update account set bal=bal-500 where accno=2");
+			stmt.executeUpdate("update account set bal=bal+500 where accno=1");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+}
