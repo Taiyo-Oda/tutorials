@@ -17,12 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/cashcards")
 public class CashCardController {
 
-  // @GetMapping :
+  // @GetMapping
   // メソッドをハンドラメソッドとしてマークします。cashcards/{requestedID}にマッチするGETリクエストは、このメソッドによって処理されます。
+  // @PathVariable
+  // 送信するパス変数をコントローラが認識するようにします。
   @GetMapping("/{requestedId}")
-  public ResponseEntity<CashCard> findById() {
-    CashCard cashCard = new CashCard(99L, 123.45);
-    return ResponseEntity.ok(cashCard);
+  public ResponseEntity<CashCard> findById(@PathVariable Long requestedId) {
+    if (requestedId.equals(99L)) {
+      CashCard cashCard = new CashCard(99L, 123.45);
+      return ResponseEntity.ok(cashCard);
+    } else {
+      return ResponseEntity.notFound().build();
+    }
   }
 
 }
