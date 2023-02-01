@@ -1,3 +1,8 @@
+/*
+ * テスト駆動開発をspring bootを使用して実行する
+ * Jsonフォーマットを使用したシリアライズとデシリアライズのテストです
+ */
+
 package example.cashcard;
 
 import org.junit.jupiter.api.Test;
