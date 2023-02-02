@@ -8,6 +8,7 @@ package example.cashcard;
 import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,8 +24,10 @@ public class CashCardController {
     this.cashCardRepository = cashCardRepository;
   }
 
-  // @GetMapping
-  // メソッドをハンドラメソッドとしてマークします。cashcards/{requestedID}にマッチするGETリクエストは、このメソッドによって処理されます。
+  /*
+   * GETエンドポイント
+   * クライアントからのGETリクエストはここで処理されます。
+   */
   // @PathVariable
   // 送信するパス変数をコントローラが認識するようにします。
   @GetMapping("/{requestedId}")
@@ -36,6 +39,15 @@ public class CashCardController {
     } else {
       return ResponseEntity.notFound().build();
     }
+  }
+
+  /*
+   * POSTエンドポイント
+   * クライアントからのPOSTリクエストはここで処理されます。
+   */
+  @PostMapping
+  private ResponseEntity createCashCard() {
+    return null;
   }
 
 }
