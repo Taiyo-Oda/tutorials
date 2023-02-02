@@ -15,8 +15,30 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// Spring Dataとデータベースの依存関係を追加
+	// implementation 'org.springframework.data:spring-data-jdbc'
+	// Spring Dataには、様々なリレーショナルおよび非リレーショナルデータベース技術に対応した多くの実装があります。また、Spring Dataはそれらの技術の上にいくつかの抽象化された機能を持っています。これらは一般にObject-Relational Mappingフレームワーク、またはORMと呼ばれています。
+	implementation 'org.springframework.data:spring-data-jdbc'
+	//testImplementation 'com.h2database:h2'
+	// データベース管理フレームワークは、リンクされたデータベースがあって初めて機能します。H2は、Javaで実装された「非常に高速で、オープンソースの、JDBC APIを使用した」SQLデータベースです。Spring DataのJDBCとシームレスに動作します。
+	// note: これは、テストを実行するときだけH2データベースを利用できるようにするためにSpring Bootに指示します。
+	testImplementation 'com.h2database:h2'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+test {
+ testLogging {
+     events "passed", "skipped", "failed" //, "standardOut", "standardError"
+
+     showExceptions true
+     exceptionFormat "full"
+     showCauses true
+     showStackTraces true
+
+     // showStandardStreams = true
+ }
 }

@@ -1,10 +1,11 @@
 /*
  * RESTControllerの作成
- * pring Web コントローラは、HTTP リクエストを処理し、応答するために設計されています。
+ * spring Web コントローラは、HTTP リクエストを処理し、応答するために設計されています。
  */
 
 package example.cashcard;
 
+import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,13 +17,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/cashcards")
 public class CashCardController {
+  private CashCardRepository cashCardRepository;
 
-  // @GetMapping :
+  public CashCardController(CashCardRepository cashCardRepository) {
+    this.cashCardRepository = cashCardRepository;
+  }
+
+  // @GetMapping
   // メソッドをハンドラメソッドとしてマークします。cashcards/{requestedID}にマッチするGETリクエストは、このメソッドによって処理されます。
+  // @PathVariable
+  // 送信するパス変数をコントローラが認識するようにします。
   @GetMapping("/{requestedId}")
-  public ResponseEntity<CashCard> findById() {
-    CashCard cashCard = new CashCard(99L, 123.45);
-    return ResponseEntity.ok(cashCard);
+  public ResponseEntity<CashCard> findById(@PathVariable Long requestedId) {
+    // Optional.isPreset() : 値(今回であればcachcard)を見つけた場合は、trueなければfalseを返す
+    Optional<CashCard> cashCardOptional = cashCardRepository.findById(requestedId);
+    if (cashCardOptional.isPresent()) {
+      return ResponseEntity.ok(cashCardOptional.get());
+    } else {
+      return ResponseEntity.notFound().build();
+    }
   }
 
 }
