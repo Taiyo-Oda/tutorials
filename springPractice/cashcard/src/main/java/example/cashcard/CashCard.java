@@ -1,4 +1,7 @@
 package example.cashcard;
 
-public record CashCard(Long id, Double amount) {
+import org.springframework.data.annotation.Id;
+
+// @id : CashCardRepositoryの@Idとしてidを設定します。
+public record CashCard(@Id Long id, Double amount) {
 }
