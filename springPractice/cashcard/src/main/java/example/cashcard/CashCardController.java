@@ -6,12 +6,15 @@
 package example.cashcard;
 
 import java.util.Optional;
+import java.net.URI;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 // @RestController : このクラスがRestController型のComponentで、HTTPリクエストを処理できることをSpringに伝える
 // @RequestMapping("/cashcards") : @RestControllerに付随するもので、このControllerにアクセスするためにどのアドレスが必要かを示す
@@ -44,10 +47,18 @@ public class CashCardController {
   /*
    * POSTエンドポイント
    * クライアントからのPOSTリクエストはここで処理されます。
+   * POSTするデータはリクエストボディに含まれ、SpringWebはこれをCashCardにでシリアライズしてくれます。
    */
   @PostMapping
-  private ResponseEntity createCashCard() {
-    return null;
+  private ResponseEntity<Void> createCashCard(@RequestBody CashCard newCashCardRequest, UriComponentsBuilder ubc) {
+    // 新しいCashCardを保存し、データベースから与えられたユニークIDでその保存オブジェクトを返す。
+    CashCard savedCashCard = cashCardRepository.save(newCashCardRequest);
+    // 呼び出し側が新しく作成された CashCard を GET するために使用する URI です。
+    URI locationOfNewCashCard = ubc
+        .path("cashcards/{id}")
+        .buildAndExpand(savedCashCard.id())
+        .toUri();
+    return ResponseEntity.created(locationOfNewCashCard).build();
   }
 
 }

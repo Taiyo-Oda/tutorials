@@ -31,14 +31,15 @@ tasks.named('test') {
 }
 
 test {
- testLogging {
-     events "passed", "skipped", "failed" //, "standardOut", "standardError"
+	// testコマンドを実行した時のログの内容を設定
+	testLogging {
+			events "passed", "skipped", "failed" //, "standardOut", "standardError"
 
-     showExceptions true
-     exceptionFormat "full"
-     showCauses true
-     showStackTraces true
+			showExceptions true
+			exceptionFormat "full"
+			showCauses true
+			showStackTraces true
 
-     // showStandardStreams = true
- }
+			// showStandardStreams = true
+	}
 }
