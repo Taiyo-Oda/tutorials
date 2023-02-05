@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import java.net.URI;
 
 // assertjはアサーション（検証用）ライブラリです
 import static org.assertj.core.api.Assertions.assertThat;
@@ -63,10 +64,22 @@ class CashCardApplicationTests {
 	 */
 	@Test
 	void shouldCreateANewCashCard() {
+		// id の指定は、既存のリソースに対してアップデートを実行する際にサポートされる
+		// CashCard newCashCard = new CashCard(44L, 250.00);
 		CashCard newCashCard = new CashCard(null, 250.00);
-		// url データを指定してPOST(レスポンスはボディが返されることは想定していないのでVoid)
+		// POSTで新しいリソースが作成された場合、statusとして201 (Created)が返ってくることを期待する
 		ResponseEntity<Void> createResponse = restTemplate.postForEntity("/cashcards", newCashCard, Void.class);
-		assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+		// 作成されたリソースの識別子を含むレスポンスヘッダを取得
+		URI locationOfNewCashCard = createResponse.getHeaders().getLocation();
+		ResponseEntity<String> getResponse = restTemplate.getForEntity(locationOfNewCashCard, String.class);
+		assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+		// レスポンスボディをJSON対応のオブジェクトに変換して取得する
+		DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
+		Number id = documentContext.read("$.id");
+		Double amount = documentContext.read("$.amount");
+		assertThat(id).isNotNull();
+		assertThat(amount).isEqualTo(250.00);
 	}
 
 }
