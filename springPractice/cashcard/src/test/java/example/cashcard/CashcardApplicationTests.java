@@ -8,20 +8,23 @@ package example.cashcard;
 
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
+import net.minidev.json.JSONArray;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import java.net.URI;
+import org.springframework.test.annotation.DirtiesContext;
 
+import java.net.URI;
 // assertjはアサーション（検証用）ライブラリです
 import static org.assertj.core.api.Assertions.assertThat;
 
 // @SpringBootTest
 // これにより、Spring Bootアプリケーションが起動され、テストがそれに対してリクエストを実行できるようになります。
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+// @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 class CashCardApplicationTests {
 
 	// 自動化されたTestRestTemplate restTemplateです。
@@ -35,11 +38,13 @@ class CashCardApplicationTests {
 	 * このテストでは、インメモリに設定したIDを指定するため、responseとしてカード情報を取得できることが期待されます。
 	 */
 	@Test
+	@DirtiesContext
 	void shouldReturnACashCardWhenDataIsSaved() {
 		// urlとレスポンスを指定してGETリクエスト
 		ResponseEntity<String> response = restTemplate.getForEntity("/cashcards/99", String.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		// レスポンスを、多くのヘルパーメソッドを持つ JSON 対応のオブジェクトに変換する
+		// https://github.com/json-path/JsonPath
 		DocumentContext documentContext = JsonPath.parse(response.getBody());
 		Number id = documentContext.read("$.id");
 		assertThat(id).isEqualTo(99);
@@ -48,21 +53,32 @@ class CashCardApplicationTests {
 	}
 
 	/*
-	 * GETリクエストテスト用クラス
-	 * GETエンドポイントを作成しurlに指定したIDでGETリクエストのテストを実施します。
-	 * このテストでは、インメモリに未設定のIDを指定するため、responseでNOT_FOUNDが帰ってくることが期待されます。
+	 * GETリクエスト（LIST取得）用テストクラス
 	 */
 	@Test
-	void shouldNotReturnACashCardWithAnUnknownId() {
-		ResponseEntity<String> response = restTemplate.getForEntity("/cashcards/1000", String.class);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-		assertThat(response.getBody()).isBlank();
+	void shouldReturnAllCashCardsWhenListIsRequested() {
+		ResponseEntity<String> response = restTemplate.getForEntity("/cashcards", String.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+		DocumentContext documentContext = JsonPath.parse(response.getBody());
+		// 配列の長さを計算する
+		int cashCardCount = documentContext.read("$.length()");
+		assertThat(cashCardCount).isEqualTo(3);
+		// containsExactlyInAnyOrder()
+		// リストには私たちが主張するものがすべて含まれていなければならないが、順番は関係ないことを表明しています。
+		// 返されたすべての id 値のリストを取得する
+		JSONArray ids = documentContext.read("$..id");
+		assertThat(ids).containsExactlyInAnyOrder(99, 100, 101);
+		// 返されたすべてのamountの値のリストを取得する
+		JSONArray amounts = documentContext.read("$..amount");
+		assertThat(amounts).containsExactlyInAnyOrder(123.45, 1.00, 150.00);
 	}
 
 	/*
 	 * POSTリクエストテスト用クラス
 	 */
 	@Test
+	@DirtiesContext
 	void shouldCreateANewCashCard() {
 		// id の指定は、既存のリソースに対してアップデートを実行する際にサポートされる
 		// CashCard newCashCard = new CashCard(44L, 250.00);
@@ -74,7 +90,7 @@ class CashCardApplicationTests {
 		URI locationOfNewCashCard = createResponse.getHeaders().getLocation();
 		ResponseEntity<String> getResponse = restTemplate.getForEntity(locationOfNewCashCard, String.class);
 		assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-		// レスポンスボディをJSON対応のオブジェクトに変換して取得する
+
 		DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
 		Number id = documentContext.read("$.id");
 		Double amount = documentContext.read("$.amount");

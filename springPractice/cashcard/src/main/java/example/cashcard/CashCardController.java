@@ -45,9 +45,19 @@ public class CashCardController {
   }
 
   /*
+   * GETエンドポイント(リスト取得用)
+   * リソースのリストを取得する
+   */
+  @GetMapping()
+  public ResponseEntity<Iterable<CashCard>> findAll() {
+    // findAll()が実行されると自動的にデータベースからすべてのCashCardレコードを返します。
+    return ResponseEntity.ok(cashCardRepository.findAll());
+  }
+
+  /*
    * POSTエンドポイント
    * クライアントからのPOSTリクエストはここで処理されます。
-   * POSTするデータはリクエストボディに含まれ、SpringWebはこれをCashCardにでシリアライズしてくれます。
+   * POSTす るデータはリクエストボディに含まれ、SpringWebはこれをCashCardにでシリアライズしてくれます。
    */
   @PostMapping
   private ResponseEntity<Void> createCashCard(@RequestBody CashCard newCashCardRequest, UriComponentsBuilder ubc) {
