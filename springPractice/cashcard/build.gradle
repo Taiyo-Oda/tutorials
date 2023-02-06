@@ -24,6 +24,8 @@ dependencies {
 	// データベース管理フレームワークは、リンクされたデータベースがあって初めて機能します。H2は、Javaで実装された「非常に高速で、オープンソースの、JDBC APIを使用した」SQLデータベースです。Spring DataのJDBCとシームレスに動作します。
 	// note: これは、テストを実行するときだけH2データベースを利用できるようにするためにSpring Bootに指示します。
 	testImplementation 'com.h2database:h2'
+
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 }
 
 tasks.named('test') {
@@ -33,7 +35,7 @@ tasks.named('test') {
 test {
 	// testコマンドを実行した時のログの内容を設定
 	testLogging {
-			events "passed", "skipped", "failed", "standardOut", "standardError"
+			events "passed", "skipped", "failed"//, "standardOut", "standardError"
 
 			showExceptions true
 			exceptionFormat "full"

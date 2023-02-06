@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import java.security.Principal;
 
 import java.net.URI;
 import java.util.*;
@@ -34,9 +35,10 @@ public class CashCardController {
   // @PathVariable
   // 送信するパス変数をコントローラが認識するようにします。
   @GetMapping("/{requestedId}")
-  public ResponseEntity<CashCard> findById(@PathVariable Long requestedId) {
+  public ResponseEntity<CashCard> findById(@PathVariable Long requestedId, Principal principal) {
     // Optional.isPreset() : 値(今回であればcachcard)を見つけた場合は、trueなければfalseを返す
-    Optional<CashCard> cashCardOptional = cashCardRepository.findById(requestedId);
+    Optional<CashCard> cashCardOptional = Optional
+        .ofNullable(cashCardRepository.findByIdAndOwner(requestedId, principal.getName()));
     if (cashCardOptional.isPresent()) {
       return ResponseEntity.ok(cashCardOptional.get());
     } else {
@@ -59,9 +61,10 @@ public class CashCardController {
    * リソースのリストを措定した内容でソートして取得する
    */
   @GetMapping
-  public ResponseEntity<Collection<CashCard>> findAll(Pageable pageable) {
+  public ResponseEntity<Collection<CashCard>> findAll(Pageable pageable, Principal principal) {
     // URIパラメータにpage=0&size=1を指定したので、pageableには必要な値が格納されます。
-    Page<CashCard> page = cashCardRepository.findAll(
+    // Principal はユーザーの認証済み、権限付きの情報を保持しています。
+    Page<CashCard> page = cashCardRepository.findByOwner(principal.getName(),
         // リクエストクエリパラメータからそれぞれ該当する値を取得します
         // 3つの必須パラメータのいずれかがアプリケーションに渡されない場合、getSortOr()
         // メソッドが、ページ、サイズ、ソートの各パラメータにデフォルト値を指定する
@@ -75,12 +78,14 @@ public class CashCardController {
   /*
    * POSTエンドポイント
    * クライアントからのPOSTリクエストはここで処理されます。
-   * POSTす るデータはリクエストボディに含まれ、SpringWebはこれをCashCardにでシリアライズしてくれます。
+   * POSTするデータはリクエストボディに含まれ、SpringWebはこれをCashCardにでシリアライズしてくれます。
    */
   @PostMapping
-  private ResponseEntity<Void> createCashCard(@RequestBody CashCard newCashCardRequest, UriComponentsBuilder ubc) {
+  private ResponseEntity<Void> createCashCard(@RequestBody CashCard newCashCardRequest, UriComponentsBuilder ubc,
+      Principal principal) {
     // 新しいCashCardを保存し、データベースから与えられたユニークIDでその保存オブジェクトを返す。
-    CashCard savedCashCard = cashCardRepository.save(newCashCardRequest);
+    CashCard cashCardWithOwner = new CashCard(null, newCashCardRequest.amount(), principal.getName());
+    CashCard savedCashCard = cashCardRepository.save(cashCardWithOwner);
     // 呼び出し側が新しく作成された CashCard を GET するために使用する URI です。
     URI locationOfNewCashCard = ubc
         .path("cashcards/{id}")

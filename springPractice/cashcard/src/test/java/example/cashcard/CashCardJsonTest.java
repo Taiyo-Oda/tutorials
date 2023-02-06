@@ -16,19 +16,27 @@ import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-// @JsonTest: CashCardJsonTestがJacksonフレームワーク（Springの一部として含まれています）を使用するテストクラスであることを示します。
-// これにより、JSONのテストとパースが広範囲にサポートされます。また、JSONオブジェクトをテストするための関連するすべての動作も確立されます。
+/*
+ * @JsonTest
+ * CashCardJsonTestがJacksonフレームワーク（Springの一部として含まれています）を使用するテストクラスであることを示します。
+ * これにより、JSONのテストとパースが広範囲にサポートされます。また、JSONオブジェクトをテストするための関連するすべての動作も確立されます。
+ */
 @JsonTest
 public class CashCardJsonTest {
 
-  // Autowiredは、要求された型のオブジェクトを作成するようにSpringに指示するアノテーションです。
-  // JacksonTester: Jackson
-  // JSONパージング・ライブラリの便利なラッパーです。これは、JSONオブジェクトのシリアライズとデシリアライズを処理します
+  /*
+   * JacksonTester
+   * Jackson JSONパージング・ライブラリの便利なラッパーです。これは、JSONオブジェクトのシリアライズとデシリアライズを処理します
+   */
   private final JacksonTester<CashCard> json;
   private final JacksonTester<CashCard[]> jsonList;
 
   private CashCard[] cashCards;
 
+  /*
+   * Autowired
+   * 要求された型のオブジェクトを作成するようにSpringに指示するアノテーションです。
+   */
   @Autowired
   public CashCardJsonTest(JacksonTester<CashCard> json,
       JacksonTester<CashCard[]> jsonList) {
@@ -39,16 +47,19 @@ public class CashCardJsonTest {
   @BeforeEach
   void setUp() {
     cashCards = Arrays.array(
-        new CashCard(99L, 123.45),
-        new CashCard(100L, 1.00),
-        new CashCard(101L, 150.00));
+        new CashCard(99L, 123.45, "sarah1"),
+        new CashCard(100L, 1.00, "sarah1"),
+        new CashCard(101L, 150.00, "sarah1"));
   }
 
-  // 以下はJsonフォーマットを使用したシリアライズとデシリアライズのテストです
-  // シリアライゼーションとデシリアライゼーションは、データオブジェクトをポータブルな形式に変換したり、そこから生成したりするために一緒に働きます。
-  // データをシリアライズするための最も一般的なデータフォーマットはJSONです。
+  /*
+   * 以下はJsonフォーマットを使用したシリアライズとデシリアライズのテストです
+   * シリアライゼーションとデシリアライゼーションは、データオブジェクトをポータブルな形式に変換したり、そこから生成したりするために一緒に働きます。
+   * データをシリアライズするための最も一般的なデータフォーマットはJSONです。
+   * デシリアライゼーションはシリアライゼーションの逆のプロセスです。ファイルやバイトストリームからアプリケーション用のオブジェクトにデータを変換します。
+   * これにより、あるプラットフォームでシリアライズされたオブジェクトを、別のプラットフォームでデシリアライズすることが可能になります。
+   */
 
-  // CashCardクラスのシリアライズテスト
   @Test
   public void cashCardSerializationTest() throws IOException {
     CashCard cashCard = cashCards[0];
@@ -61,21 +72,18 @@ public class CashCardJsonTest {
         .isEqualTo(123.45);
   }
 
-  // デシリアライズテスト
-  // デシリアライゼーションはシリアライゼーションの逆のプロセスです。ファイルやバイトストリームからアプリケーション用のオブジェクトにデータを変換します。
-  // これにより、あるプラットフォームでシリアライズされたオブジェクトを、別のプラットフォームでデシリアライズすることが可能になります。
-  // 最初のテストが合格した後、JSONからJavaに変換されるように、データをデシリアライズする2番目のテストです。
   @Test
   public void cashCardDeserializationTest() throws IOException {
     String expected = """
         {
             "id": 99,
-            "amount": 123.45
+            "amount": 123.45,
+            "owner": "sarah1"
         }
         """;
     assertThat(json.parse(expected))
-        .isEqualTo(new CashCard(99L, 123.45));
-    assertThat(json.parseObject(expected).id()).isEqualTo(99);
+        .isEqualTo(new CashCard(99L, 123.45, "sarah1"));
+    assertThat(json.parseObject(expected).id()).isEqualTo(99L);
     assertThat(json.parseObject(expected).amount()).isEqualTo(123.45);
   }
 
@@ -88,9 +96,10 @@ public class CashCardJsonTest {
   void cashCardListDeserializationTest() throws IOException {
     String expected = """
         [
-            { "id": 99, "amount": 123.45 },
-            { "id": 100, "amount": 1.00 },
-            { "id": 101, "amount": 150.00 }
+             {"id": 99, "amount": 123.45 , "owner": "sarah1"},
+             {"id": 100, "amount": 1.00 , "owner": "sarah1"},
+             {"id": 101, "amount": 150.00, "owner": "sarah1"}
+
         ]
         """;
     assertThat(jsonList.parse(expected)).isEqualTo(cashCards);
