@@ -1,12 +1,20 @@
 package rewards.internal.reward;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import common.datetime.SimpleDate;
 import rewards.AccountContribution;
 import rewards.Dining;
 import rewards.RewardConfirmation;
-
-import javax.sql.DataSource;
-import java.sql.*;
 
 /**
  * JDBC implementation of a reward repository that
@@ -21,6 +29,7 @@ import java.sql.*;
  *   with @Autowired.
  */
 
+@Repository
 public class JdbcRewardRepository implements RewardRepository {
 
 	private DataSource dataSource;
@@ -29,6 +38,7 @@ public class JdbcRewardRepository implements RewardRepository {
 	 * Sets the data source this repository will use to insert rewards.
 	 * @param dataSource the data source
 	 */
+	@Autowired
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
