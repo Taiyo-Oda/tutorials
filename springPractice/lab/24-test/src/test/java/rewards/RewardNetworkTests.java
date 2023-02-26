@@ -1,14 +1,19 @@
 package rewards;
 
-import common.money.MonetaryAmount;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.SpringApplication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import static org.junit.jupiter.api.Assertions.*;
+import common.money.MonetaryAmount;
+import config.RewardsConfig;
 
 /**
  * A system test that verifies the components of the RewardNetwork application
@@ -82,13 +87,15 @@ import static org.junit.jupiter.api.Assertions.*;
  *   lab document.)
  * - Run the test again.
  */
-
+@SpringJUnitConfig
+@ActiveProfiles({"jdbc", "local"})
 public class RewardNetworkTests {
 
 	
 	/**
 	 * The object being tested.
 	 */
+	@Autowired 
 	private RewardNetwork rewardNetwork;
 
 	/**
@@ -96,20 +103,6 @@ public class RewardNetworkTests {
 	 */
 	private ConfigurableApplicationContext context;
 
-	@BeforeEach
-	public void setUp() {
-		// Create the test configuration for the application from one file
-		context = SpringApplication.run(TestInfrastructureConfig.class);
-		// Get the bean to use to invoke the application
-		rewardNetwork = context.getBean(RewardNetwork.class);
-	}
-
-	@AfterEach
-	public void tearDown() throws Exception {
-		// simulate the Spring bean destruction lifecycle:
-		if (context != null)
-			context.close();
-	}
 
 	@Test
 	@DisplayName("Test if reward computation and distribution works")
@@ -149,5 +142,22 @@ public class RewardNetworkTests {
 				() -> assertEquals(2, contribution.getDistributions().size()),
 				() -> assertEquals(MonetaryAmount.valueOf("4.00"), contribution.getDistribution("Annabelle").getAmount()),
 				() -> assertEquals(MonetaryAmount.valueOf("4.00"), contribution.getDistribution("Corgan").getAmount()));
+	}
+	
+	// @SpringJUnitConfigでクラスを指定しない場合は、@Configurationでマークされた内側の静的クラスを参照するとされた
+	@Configuration
+	@Import({
+		TestInfrastructureLocalConfig.class,
+		TestInfrastructureJndiConfig.class,
+		RewardsConfig.class })
+	static class TestInfrastructureConfig {
+
+		/**
+		 * The bean logging post-processor from the bean lifecycle slides.
+		 */
+		@Bean
+		public static LoggingBeanPostProcessor loggingBean(){
+			return new LoggingBeanPostProcessor();
+		}
 	}
 }
