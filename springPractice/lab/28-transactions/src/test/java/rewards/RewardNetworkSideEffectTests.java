@@ -1,5 +1,9 @@
 package rewards;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import javax.sql.DataSource;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -9,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import javax.sql.DataSource;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A system test that demonstrates how the effects of a given test can affect
@@ -32,6 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * TODO-10: Add @Transactional on the class and re-run the test. It should pass.
  * Do you know why?
  */
+@Transactional
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { SystemTestConfig.class })
 @TestMethodOrder(MethodOrderer.MethodName.class)
