@@ -144,7 +144,7 @@ public class RewardNetworkTests {
 				() -> assertEquals(MonetaryAmount.valueOf("4.00"), contribution.getDistribution("Corgan").getAmount()));
 	}
 	
-	// @SpringJUnitConfigでクラスを指定しない場合は、@Configurationでマークされた内側の静的クラスを参照するとされた
+	// @SpringJUnitConfigでクラスを指定しない場合は、@Configurationでマークされた内側の静的クラスを参照する。
 	@Configuration
 	@Import({
 		TestInfrastructureLocalConfig.class,
