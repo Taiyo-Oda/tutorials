@@ -1,14 +1,16 @@
 package rewards.internal.restaurant;
 
-import common.money.Percentage;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import static org.junit.jupiter.api.Assertions.*;
 
 import javax.sql.DataSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+
+import common.money.Percentage;
 
 /**
  * Tests the JDBC restaurant repository with a test data source to verify data access and relational-to-object mapping
@@ -20,7 +22,7 @@ public class JdbcRestaurantRepositoryTests {
 
 	@BeforeEach
 	public void setUp() throws Exception {
-		repository = new JdbcRestaurantRepository(createTestDataSource());
+		repository = new JdbcRestaurantRepository(new JdbcTemplate(createTestDataSource()));
 	}
 
 	@Test
