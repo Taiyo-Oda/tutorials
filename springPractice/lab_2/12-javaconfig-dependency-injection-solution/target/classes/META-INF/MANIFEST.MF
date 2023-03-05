@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Built-By: odataiyou
+Build-Jdk: 17.0.3
+Implementation-Title: 12-javaconfig-dependency-injection-solution
+Implementation-Version: 5.3.23
+Implementation-Vendor-Id: io.spring.training.core-spring
+Implementation-Vendor: Spring Training
+Implementation-URL: https://spring.io/projects/spring-boot/parentProject
+ /12-javaconfig-dependency-injection-solution
+Created-By: Maven Integration for Eclipse
+
