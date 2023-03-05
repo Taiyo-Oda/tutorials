@@ -1,18 +1,27 @@
 package accounts.web;
 
-import accounts.AccountManager;
-import common.money.Percentage;
+import java.net.URI;
+import java.util.HashMap;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import accounts.AccountManager;
+import common.money.Percentage;
 import rewards.internal.account.Account;
 import rewards.internal.account.Beneficiary;
-
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * A controller handling requests for CRUD operations on Accounts and their
@@ -66,7 +75,8 @@ public class AccountController {
 	// TODO-06: Complete this method. Add annotations to:
 	// a. Respond to POST /accounts requests
     // b. Use a proper annotation for creating an Account object from the request
-	public ResponseEntity<Void> createAccount(Account newAccount) {
+	@PostMapping("/accounts")
+	public ResponseEntity<Void> createAccount(@RequestBody Account newAccount) {
 		// Saving the account also sets its entity Id
 		Account account = accountManager.save(newAccount);
 
@@ -91,7 +101,13 @@ public class AccountController {
 		//     'ResponseEntity' to implement this - Use ResponseEntity.created(..)
 		// b. Refer to the POST example in the slides for more information
 
-		return null; // Return something other than null
+		URI uri = ServletUriComponentsBuilder
+				.fromCurrentRequestUri()
+				.path("/{id}")
+				.buildAndExpand(resourceId)
+				.toUri();
+				
+		return ResponseEntity.created(uri).build(); // Return something other than null
 	}
 
 	/**
