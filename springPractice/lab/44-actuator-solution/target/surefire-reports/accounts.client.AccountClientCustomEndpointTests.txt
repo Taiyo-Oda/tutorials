@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: accounts.client.AccountClientCustomEndpointTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.937 s - in accounts.client.AccountClientCustomEndpointTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.691 s - in accounts.client.AccountClientCustomEndpointTests

@@ -38,9 +38,9 @@ public class AccountController {
 	 */
 	// TODO-02: Review the code that performs the following
 	// a. Respond to GET /accounts
-	// b. Return a List<Account> to be converted to the response body
+    // b. Return a List<Account> to be converted to the response body
 	// - Access http://localhost:8080/accounts using a browser or curl
-	// and verify that you see the list of accounts in JSON format.
+	//   and verify that you see the list of accounts in JSON format.
 	@GetMapping(value = "/accounts")
 	public List<Account> accountSummary() {
 		return accountManager.getAllAccounts();
@@ -51,9 +51,9 @@ public class AccountController {
 	 */
 	// TODO-04: Review the code that performs the following
 	// a. Respond to GET /accounts/{accountId}
-	// b. Return an Account to be converted to the response body
+    // b. Return an Account to be converted to the response body
 	// - Access http://localhost:8080/accounts/0 using a browser or curl
-	// and verify that you see the account detail in JSON format
+	//   and verify that you see the account detail in JSON format
 	@GetMapping(value = "/accounts/{id}")
 	public Account accountDetails(@PathVariable int id) {
 		return retrieveAccount(id);
@@ -65,7 +65,7 @@ public class AccountController {
 	 */
 	// TODO-06: Complete this method. Add annotations to:
 	// a. Respond to POST /accounts requests
-	// b. Use a proper annotation for creating an Account object from the request
+    // b. Use a proper annotation for creating an Account object from the request
 	public ResponseEntity<Void> createAccount(Account newAccount) {
 		// Saving the account also sets its entity Id
 		Account account = accountManager.save(newAccount);
@@ -76,19 +76,19 @@ public class AccountController {
 	}
 
 	/**
-	 * Return a response with the location of the new resource.
+	 * Return a response with the location of the new resource. 
 	 *
 	 * Suppose we have just received an incoming URL of, say,
-	 * http://localhost:8080/accounts and resourceId is "1111".
+	 *   http://localhost:8080/accounts and resourceId is "1111".
 	 * Then the URL of the new resource will be
-	 * http://localhost:8080/accounts/1111.
+	 *   http://localhost:8080/accounts/1111.
 	 */
 	private ResponseEntity<Void> entityWithLocation(Object resourceId) {
 
 		// TODO-07: Set the 'location' header on a Response to URI of
-		// the newly created resource and return it.
+		//          the newly created resource and return it.
 		// a. You will need to use 'ServletUriComponentsBuilder' and
-		// 'ResponseEntity' to implement this - Use ResponseEntity.created(..)
+		//     'ResponseEntity' to implement this - Use ResponseEntity.created(..)
 		// b. Refer to the POST example in the slides for more information
 
 		return null; // Return something other than null
@@ -113,14 +113,13 @@ public class AccountController {
 	// b. Extract a beneficiary name from the incoming request
 	// c. Indicate a "201 Created" status
 	public ResponseEntity<Void> addBeneficiary(long accountId, String beneficiaryName) {
-
+		
 		// TODO-11: Create a ResponseEntity containing the location of the newly
 		// created beneficiary.
-		// a. Use accountManager's addBeneficiary method to add a beneficiary to an
-		// account
+		// a. Use accountManager's addBeneficiary method to add a beneficiary to an account
 		// b. Use the entityWithLocation method - like we did for createAccount().
-
-		return null; // Modify this to return something
+		
+		return null;  // Modify this to return something
 	}
 
 	/**
@@ -128,8 +127,7 @@ public class AccountController {
 	 * given id.
 	 */
 	// TODO-12: Complete this method by adding the appropriate annotations to:
-	// a. Respond to a DELETE to
-	// /accounts/{accountId}/beneficiaries/{beneficiaryName}
+	// a. Respond to a DELETE to /accounts/{accountId}/beneficiaries/{beneficiaryName}
 	// b. Indicate a "204 No Content" status
 	public void removeBeneficiary(long accountId, String beneficiaryName) {
 		Account account = accountManager.getAccount(accountId);
@@ -161,11 +159,10 @@ public class AccountController {
 	}
 
 	// TODO-17 (Optional): Add a new exception-handling method
-	// - It should map DataIntegrityViolationException to a 409 Conflict status
-	// code.
+	// - It should map DataIntegrityViolationException to a 409 Conflict status code.
 	// - Use the handleNotFound method above for guidance.
 	// - Consult the lab document for further instruction
-
+	
 	/**
 	 * Finds the Account with the given id, throwing an IllegalArgumentException
 	 * if there is no such Account.

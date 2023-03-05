@@ -5,7 +5,6 @@ rewards/TestInfrastructureLocalConfig.class
 rewards/internal/RewardNetworkImplTests.class
 rewards/internal/StubRestaurantRepository.class
 rewards/TestInfrastructureJndiConfig.class
-rewards/RewardNetworkTests$TestInfrastructureConfig.class
 rewards/RewardNetworkTests.class
 rewards/TestInfrastructureConfig.class
 rewards/LoggingBeanPostProcessor.class
