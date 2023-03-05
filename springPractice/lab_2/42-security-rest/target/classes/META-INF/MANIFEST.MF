@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Built-By: odataiyou
+Build-Jdk: 17.0.3
+Implementation-Title: 42-security-rest
+Implementation-Version: 5.3.23
+Implementation-Vendor-Id: io.spring.training.core-spring
+Implementation-Vendor: Spring Training
+Implementation-URL: https://spring.io/projects/spring-boot/parentProject
+ /42-security-rest
+Main-Class: accounts.RestWsApplication
+Created-By: Maven Integration for Eclipse
+
